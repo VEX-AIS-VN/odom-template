@@ -14,39 +14,45 @@ impl Translation {
         Self { x, y }
     }
 
+    /// Instantiates a Translation vector entirely of 0 values.
     pub fn zero() -> Self {
-        /// Instantiates a Translation vector entirely of 0 values.
         Self { x: Length::from_canonical(0f64), y: Length::from_canonical(0f64) }
     }
 
+    /// Gets the Euclidean norm of the vector, being its magnitude from the (relative) origin.
     pub fn norm(&self) -> Length {
-        /// Gets the Euclidean norm of the vector, being its magnitude from the (relative) origin.
         Length::from_canonical((self.x * self.x + self.y * self.y).canonical().sqrt())
     }
 
+    /// Gets the angle of the vector compared with the origin.
     pub fn heading(&self) -> Angle {
-        /// Gets the angle of the vector compared with the origin.
         self.y.canonical().atan2(self.x.canonical()) * Radians
     }
 
+    /// Gets the distance between two Translations.
     pub fn distance(&self, other: Translation) -> Length {
-        /// Gets the distance between two Translations.
         (self - &other).norm()
     }
 
+    /// Gets the square of the Euclidean norm of the vector. This exists as calculating norm is
+    /// more expensive, when it may only be necessary to have the square.
     pub fn norm_squared(&self) -> f64 {
-        /// Gets the square of the Euclidean norm of the vector. This exists as calculating norm is
-        /// more expensive, when it may only be necessary to have the square.
         let x_meters = self.x.to::<Meters>();
         let y_meters = self.y.to::<Meters>();
 
         x_meters * x_meters + y_meters * y_meters
     }
 
+    /// Rotates a translation around the origin by a certain angle.
     pub fn rotate(&self, angle: Angle) -> Translation {
-        /// Rotates a translation around the origin by a certain angle.
         let (sin_theta, cos_theta) = angle.to::<Radians>().sin_cos();
         Translation::new(self.x * cos_theta - self.y * sin_theta, self.x * sin_theta + self.y * cos_theta)
+    }
+}
+
+impl Into<evian::math::Vec2<f64>> for Translation {
+    fn into(self) -> evian::math::Vec2<f64> {
+        evian::math::Vec2::new(self.x.to::<Meters>(), self.y.to::<Meters>())
     }
 }
 
@@ -191,6 +197,12 @@ impl Sub<&Pose> for &Pose {
 
     fn sub(self, rhs: &Pose) -> Self::Output {
         self + -rhs
+    }
+}
+
+impl Into<evian::math::Vec2<f64>> for Pose {
+    fn into(self) -> evian::math::Vec2<f64> {
+        evian::math::Vec2::new(self.translation.x.to::<Meters>(), self.translation.y.to::<Meters>())
     }
 }
 

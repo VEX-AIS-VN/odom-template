@@ -3,29 +3,25 @@
 CanonicalUnit	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    type CanonicalUnit: UnitOf<S, Self>;$/;"	t	interface:Dimension
 Celsius	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/dimensions.rs	/^impl<S: Scalar> UnitOf<S, Temperature<S>> for Celsius {$/;"	c
 DifferentialDriveOdometry	/share/program/vrc/odom/src/odometry.rs	/^impl DifferentialDriveOdometry {$/;"	c
-DifferentialDriveOdometry	/share/program/vrc/odom/src/odometry.rs	/^impl Odometry<2> for DifferentialDriveOdometry {$/;"	c
+DifferentialDriveOdometry	/share/program/vrc/odom/src/odometry.rs	/^impl TracksHeading for DifferentialDriveOdometry {$/;"	c
+DifferentialDriveOdometry	/share/program/vrc/odom/src/odometry.rs	/^impl TracksPosition for DifferentialDriveOdometry {$/;"	c
+DifferentialDriveOdometry	/share/program/vrc/odom/src/odometry.rs	/^impl TracksVelocity for DifferentialDriveOdometry {$/;"	c
 DifferentialDriveOdometry	/share/program/vrc/odom/src/odometry.rs	/^pub struct DifferentialDriveOdometry {$/;"	s
-DifferentialDrivetrain	/share/program/vrc/odom/src/drivetrain.rs	/^impl<O: Odometry> DifferentialDrivetrain<O> {$/;"	c
-DifferentialDrivetrain	/share/program/vrc/odom/src/drivetrain.rs	/^pub struct DifferentialDrivetrain<O> {$/;"	s
 Dimension	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^pub trait Dimension<S: Scalar = f64> {$/;"	i
-Drivetrain	/share/program/vrc/odom/src/drivetrain.rs	/^pub trait Drivetrain {$/;"	i
-DrivetrainConstants	/share/program/vrc/odom/src/drivetrain.rs	/^impl DrivetrainConstants {$/;"	c
-DrivetrainConstants	/share/program/vrc/odom/src/drivetrain.rs	/^pub struct DrivetrainConstants {$/;"	s
+DrivetrainConstants	/share/program/vrc/odom/src/main.rs	/^struct DrivetrainConstants {$/;"	s
 Fahrenheit	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/dimensions.rs	/^impl<S: Scalar> UnitOf<S, Temperature<S>> for Fahrenheit {$/;"	c
-MotionController	/share/program/vrc/odom/src/motion_control.rs	/^trait MotionController<T> {$/;"	i
+Localization	/share/program/vrc/odom/src/odometry.rs	/^impl Localization {$/;"	c
+Localization	/share/program/vrc/odom/src/odometry.rs	/^pub struct Localization {$/;"	s
 ONE	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    const ONE: D;$/;"	C	interface:One
 ONE_CANONICAL	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    const ONE_CANONICAL: S;$/;"	C	interface:One
 Odometry	/share/program/vrc/odom/src/main.rs	/^trait Odometry {$/;"	i
-Odometry	/share/program/vrc/odom/src/odometry.rs	/^pub trait Odometry<const N: usize> {$/;"	i
 One	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^pub trait One<S: Scalar, D: Dimension<S>>: UnitOf<S, D> {$/;"	i
 Output	/share/program/vrc/odom/src/units.rs	/^    type Output = Pose;$/;"	t	implementation:Pose
 Output	/share/program/vrc/odom/src/units.rs	/^    type Output = Translation;$/;"	t	implementation:Translation
-PIDController	/share/program/vrc/odom/src/motion_control.rs	/^impl PIDController {$/;"	c
-PIDController	/share/program/vrc/odom/src/motion_control.rs	/^impl<T> MotionController<T> for PIDController $/;"	c
-PIDController	/share/program/vrc/odom/src/motion_control.rs	/^pub struct PIDController {$/;"	s
 Pose	/share/program/vrc/odom/src/units.rs	/^impl Add<&Pose> for &Pose {$/;"	c
 Pose	/share/program/vrc/odom/src/units.rs	/^impl Add<Translation> for Pose {$/;"	c
 Pose	/share/program/vrc/odom/src/units.rs	/^impl From<Translation> for Pose {$/;"	c
+Pose	/share/program/vrc/odom/src/units.rs	/^impl Into<evian::math::Vec2<f64>> for Pose {$/;"	c
 Pose	/share/program/vrc/odom/src/units.rs	/^impl Neg for &Pose {$/;"	c
 Pose	/share/program/vrc/odom/src/units.rs	/^impl Neg for Pose {$/;"	c
 Pose	/share/program/vrc/odom/src/units.rs	/^impl Pose {$/;"	c
@@ -33,9 +29,11 @@ Pose	/share/program/vrc/odom/src/units.rs	/^impl Sub<&Pose> for &Pose {$/;"	c
 Pose	/share/program/vrc/odom/src/units.rs	/^pub struct Pose {$/;"	s
 Robot	/share/program/vrc/odom/src/main.rs	/^struct Robot {$/;"	s
 Scalar	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^pub trait Scalar:$/;"	i
+SharedMotor	/share/program/vrc/odom/src/odometry.rs	/^type SharedMotor = Rc<RefCell<Motor>>;$/;"	t
 T	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^impl<$/;"	c
 Translation	/share/program/vrc/odom/src/units.rs	/^impl Add<&Translation> for &Translation {$/;"	c
 Translation	/share/program/vrc/odom/src/units.rs	/^impl From<Pose> for Translation {$/;"	c
+Translation	/share/program/vrc/odom/src/units.rs	/^impl Into<evian::math::Vec2<f64>> for Translation {$/;"	c
 Translation	/share/program/vrc/odom/src/units.rs	/^impl Mul<f64> for Translation {$/;"	c
 Translation	/share/program/vrc/odom/src/units.rs	/^impl Neg for &Translation {$/;"	c
 Translation	/share/program/vrc/odom/src/units.rs	/^impl Neg for Translation {$/;"	c
@@ -43,7 +41,6 @@ Translation	/share/program/vrc/odom/src/units.rs	/^impl PartialEq<Translation> f
 Translation	/share/program/vrc/odom/src/units.rs	/^impl Sub<&Translation> for &Translation {$/;"	c
 Translation	/share/program/vrc/odom/src/units.rs	/^impl Translation {$/;"	c
 Translation	/share/program/vrc/odom/src/units.rs	/^pub struct Translation {$/;"	s
-TrapezoidalMotionProfile	/share/program/vrc/odom/src/motion_control.rs	/^pub struct TrapezoidalMotionProfile {$/;"	s
 UnitOf	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^pub trait UnitOf<S: Scalar, M: Dimension<S> + ?Sized> {$/;"	i
 __const_conversion_op_imp	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! __const_conversion_op_imp {$/;"	M
 __dim_const_imp	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! __dim_const_imp {$/;"	M
@@ -51,17 +48,18 @@ __dim_const_op_imp	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f
 __measure_conversions	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! __measure_conversions {$/;"	M
 __unit_mult_imp	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! __unit_mult_imp {$/;"	M
 __unit_one_imp	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! __unit_one_imp {$/;"	M
+_task	/share/program/vrc/odom/src/odometry.rs	/^    _task: Task<()>,$/;"	m	struct:DifferentialDriveOdometry
 add	/share/program/vrc/odom/src/units.rs	/^    fn add(self, rhs: &Pose) -> Self::Output {$/;"	P	implementation:Pose
 add	/share/program/vrc/odom/src/units.rs	/^    fn add(self, rhs: &Translation) -> Self::Output {$/;"	P	implementation:Translation
 add	/share/program/vrc/odom/src/units.rs	/^    fn add(self, rhs: Translation) -> Self::Output {$/;"	P	implementation:Pose
 angle	/share/program/vrc/odom/src/units.rs	/^    pub angle: Angle$/;"	m	struct:Pose
+angular_velocity	/share/program/vrc/odom/src/odometry.rs	/^    fn angular_velocity(&self) -> f64 {$/;"	P	implementation:DifferentialDriveOdometry
+angular_velocity	/share/program/vrc/odom/src/odometry.rs	/^    pub angular_velocity: AngularVelocity,$/;"	m	struct:Localization
 canonical	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    fn canonical(&self) -> S;$/;"	P	interface:Dimension
-constants	/share/program/vrc/odom/src/drivetrain.rs	/^    constants: DrivetrainConstants,$/;"	m	struct:DifferentialDrivetrain
-constants	/share/program/vrc/odom/src/odometry.rs	/^    constants: DrivetrainConstants,$/;"	m	struct:DifferentialDriveOdometry
+data	/share/program/vrc/odom/src/odometry.rs	/^    data: Rc<RefCell<Localization>>,$/;"	m	struct:DifferentialDriveOdometry
 dimension	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! dimension {$/;"	M
 dimensions	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^pub mod dimensions;$/;"	n
 distance	/share/program/vrc/odom/src/units.rs	/^    pub fn distance(&self, other: Translation) -> Length {$/;"	P	implementation:Translation
-drivetrain	/share/program/vrc/odom/src/main.rs	/^mod drivetrain;$/;"	n
 eq	/share/program/vrc/odom/src/units.rs	/^    fn eq(&self, other: &Translation) -> bool {$/;"	P	implementation:Translation
 from	/share/program/vrc/odom/src/units.rs	/^    fn from(value: Pose) -> Self {$/;"	P	implementation:Translation
 from	/share/program/vrc/odom/src/units.rs	/^    fn from(value: Translation) -> Self {$/;"	P	implementation:Pose
@@ -70,49 +68,34 @@ from_canonical	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shr
 from_canonical	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    fn from_canonical(canonical: S) -> S;$/;"	P	interface:UnitOf
 from_canonical	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    fn from_canonical(value: S) -> Self;$/;"	P	interface:Dimension
 from_scalar	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    fn from_scalar<U: UnitOf<S, Self>>(value: S) -> Self$/;"	P	interface:Dimension
-get_pose	/share/program/vrc/odom/src/odometry.rs	/^    fn get_pose(&self) -> Pose {$/;"	P	implementation:DifferentialDriveOdometry
-get_pose	/share/program/vrc/odom/src/odometry.rs	/^    fn get_pose(&self) -> Pose;$/;"	P	interface:Odometry
+heading	/share/program/vrc/odom/src/odometry.rs	/^    fn heading(&self) -> evian::prelude::Angle {$/;"	P	implementation:DifferentialDriveOdometry
 heading	/share/program/vrc/odom/src/units.rs	/^    pub fn heading(&self) -> Angle {$/;"	P	implementation:Pose
 heading	/share/program/vrc/odom/src/units.rs	/^    pub fn heading(&self) -> Angle {$/;"	P	implementation:Translation
 impl_assign	/share/program/vrc/odom/src/units.rs	/^macro_rules! impl_assign {$/;"	M
 impl_owned	/share/program/vrc/odom/src/units.rs	/^macro_rules! impl_owned {$/;"	M
-integral	/share/program/vrc/odom/src/motion_control.rs	/^    integral: f64,$/;"	m	struct:PIDController
-kD	/share/program/vrc/odom/src/motion_control.rs	/^    kD: f64,$/;"	m	struct:PIDController
-kI	/share/program/vrc/odom/src/motion_control.rs	/^    kI: f64,$/;"	m	struct:PIDController
-kP	/share/program/vrc/odom/src/motion_control.rs	/^    kP: f64,$/;"	m	struct:PIDController
-left_motor	/share/program/vrc/odom/src/drivetrain.rs	/^    left_motor: Motor,$/;"	m	struct:DifferentialDrivetrain
+into	/share/program/vrc/odom/src/units.rs	/^    fn into(self) -> evian::math::Vec2<f64> {$/;"	P	implementation:Pose
+into	/share/program/vrc/odom/src/units.rs	/^    fn into(self) -> evian::math::Vec2<f64> {$/;"	P	implementation:Translation
 left_motor	/share/program/vrc/odom/src/main.rs	/^    left_motor: Motor,$/;"	m	struct:Robot
+linear_velocity	/share/program/vrc/odom/src/odometry.rs	/^    fn linear_velocity(&self) -> f64 {$/;"	P	implementation:DifferentialDriveOdometry
 main	/share/program/vrc/odom/src/main.rs	/^async fn main(peripherals: Peripherals) {$/;"	f
-max_integral	/share/program/vrc/odom/src/motion_control.rs	/^    max_integral: f64$/;"	m	struct:PIDController
-maximum_acceleration	/share/program/vrc/odom/src/motion_control.rs	/^    maximum_acceleration: MetersPerSecondSquared,$/;"	m	struct:TrapezoidalMotionProfile
-maximum_velocity	/share/program/vrc/odom/src/motion_control.rs	/^    maximum_velocity: MetersPerSecond,$/;"	m	struct:TrapezoidalMotionProfile
-motion_control	/share/program/vrc/odom/src/main.rs	/^mod motion_control;$/;"	n
 mul	/share/program/vrc/odom/src/units.rs	/^    fn mul(self, rhs: f64) -> Self::Output {$/;"	P	implementation:Translation
 ne	/share/program/vrc/odom/src/units.rs	/^    fn ne(&self, other: &Translation) -> bool {$/;"	P	implementation:Translation
 neg	/share/program/vrc/odom/src/units.rs	/^    fn neg(self) -> Self::Output {$/;"	P	implementation:Pose
 neg	/share/program/vrc/odom/src/units.rs	/^    fn neg(self) -> Self::Output {$/;"	P	implementation:Translation
-new	/share/program/vrc/odom/src/drivetrain.rs	/^    fn new(wheel_diameter: Length, wheel_distance: Length) -> Self {$/;"	P	implementation:DrivetrainConstants
-new	/share/program/vrc/odom/src/drivetrain.rs	/^    pub fn new(constants: DrivetrainConstants, odometry: O, left_motor: Motor, right_motor: Moto/;"	P	implementation:DifferentialDrivetrain
-new	/share/program/vrc/odom/src/motion_control.rs	/^    pub fn new(kP: f64, kI: f64, kD: f64, max_integral: f64) -> Self {$/;"	P	implementation:PIDController
-new	/share/program/vrc/odom/src/odometry.rs	/^    pub fn new(constants: DrivetrainConstants) -> Self {$/;"	P	implementation:DifferentialDriveOdometry
+new	/share/program/vrc/odom/src/odometry.rs	/^    fn new() -> Self {$/;"	P	implementation:Localization
+new	/share/program/vrc/odom/src/odometry.rs	/^    pub fn new(constants: DrivetrainConstants, imu: Option<InertialSensor>, left_motor: SharedMo/;"	P	implementation:DifferentialDriveOdometry
 new	/share/program/vrc/odom/src/units.rs	/^    pub fn new(translation: Translation, angle: Angle) -> Self {$/;"	P	implementation:Pose
 new	/share/program/vrc/odom/src/units.rs	/^    pub fn new(x: Length, y: Length) -> Self {$/;"	P	implementation:Translation
 norm	/share/program/vrc/odom/src/units.rs	/^    pub fn norm(&self) -> Length {$/;"	P	implementation:Pose
 norm	/share/program/vrc/odom/src/units.rs	/^    pub fn norm(&self) -> Length {$/;"	P	implementation:Translation
 norm_squared	/share/program/vrc/odom/src/units.rs	/^    pub fn norm_squared(&self) -> f64 {$/;"	P	implementation:Pose
 norm_squared	/share/program/vrc/odom/src/units.rs	/^    pub fn norm_squared(&self) -> f64 {$/;"	P	implementation:Translation
-odometry	/share/program/vrc/odom/src/drivetrain.rs	/^    odometry: O,$/;"	m	struct:DifferentialDrivetrain
 odometry	/share/program/vrc/odom/src/main.rs	/^mod odometry;$/;"	n
-pose	/share/program/vrc/odom/src/odometry.rs	/^    pub pose: Pose,$/;"	m	struct:DifferentialDriveOdometry
+pose	/share/program/vrc/odom/src/odometry.rs	/^    pub pose: Pose,$/;"	m	struct:Localization
+position	/share/program/vrc/odom/src/odometry.rs	/^    fn position(&self) -> evian::prelude::Vec2<f64> {$/;"	P	implementation:DifferentialDriveOdometry
 prelude	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/evian-0.3.0-rc.1/src/lib.rs	/^pub mod prelude {$/;"	n
 prelude	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^pub mod prelude {$/;"	n
 prelude	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/vexide-0.8.0/src/lib.rs	/^pub mod prelude {$/;"	n
-prev_left	/share/program/vrc/odom/src/odometry.rs	/^    prev_left: Angle,$/;"	m	struct:DifferentialDriveOdometry
-prev_right	/share/program/vrc/odom/src/odometry.rs	/^    prev_right: Angle$/;"	m	struct:DifferentialDriveOdometry
-previous_error	/share/program/vrc/odom/src/motion_control.rs	/^    previous_error: f64,$/;"	m	struct:PIDController
-reset	/share/program/vrc/odom/src/motion_control.rs	/^    fn reset(&mut self) {$/;"	f
-reset	/share/program/vrc/odom/src/motion_control.rs	/^    fn reset(&mut self);$/;"	P	interface:MotionController
-right_motor	/share/program/vrc/odom/src/drivetrain.rs	/^    right_motor: Motor$/;"	m	struct:DifferentialDrivetrain
 right_motor	/share/program/vrc/odom/src/main.rs	/^    right_motor: Motor$/;"	m	struct:Robot
 rotate	/share/program/vrc/odom/src/units.rs	/^    pub fn rotate(&self, angle: Angle) -> Pose {$/;"	P	implementation:Pose
 rotate	/share/program/vrc/odom/src/units.rs	/^    pub fn rotate(&self, angle: Angle) -> Translation {$/;"	P	implementation:Translation
@@ -121,9 +104,7 @@ scalar_extension_trait	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b
 simple_unit	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! simple_unit {$/;"	M
 sub	/share/program/vrc/odom/src/units.rs	/^    fn sub(self, rhs: &Pose) -> Self::Output {$/;"	P	implementation:Pose
 sub	/share/program/vrc/odom/src/units.rs	/^    fn sub(self, rhs: &Translation) -> Self::Output {$/;"	P	implementation:Translation
-tick	/share/program/vrc/odom/src/odometry.rs	/^    fn tick(&mut self, measurements: [Angle; 2]) {$/;"	P	implementation:DifferentialDriveOdometry
-tick	/share/program/vrc/odom/src/odometry.rs	/^    fn tick(&mut self, measurements: [Angle; N]);$/;"	P	interface:Odometry
-tick_odometry	/share/program/vrc/odom/src/drivetrain.rs	/^    fn tick_odometry(&mut self);$/;"	P	interface:Drivetrain
+task	/share/program/vrc/odom/src/odometry.rs	/^    async fn task($/;"	P	implementation:DifferentialDriveOdometry
 time	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/vexide-0.8.0/src/lib.rs	/^pub mod time {$/;"	n
 to	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    fn to<U: UnitOf<S, Self>>(&self) -> S$/;"	P	interface:Dimension
 to_canonical	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/dimensions.rs	/^    fn to_canonical(converted: S) -> S {$/;"	P	implementation:Celsius
@@ -133,10 +114,9 @@ track_position	/share/program/vrc/odom/src/main.rs	/^    fn track_position(&self
 translation	/share/program/vrc/odom/src/units.rs	/^    pub translation: Translation,$/;"	m	struct:Pose
 unit_type	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! unit_type {$/;"	M
 units	/share/program/vrc/odom/src/main.rs	/^mod units;$/;"	n
-update	/share/program/vrc/odom/src/motion_control.rs	/^    fn update(&mut self, measurement: T, setpoint: T) -> T {$/;"	f
-update	/share/program/vrc/odom/src/motion_control.rs	/^    fn update(&mut self, measurement: T, setpoint: T) -> T;$/;"	P	interface:MotionController
-wheel_diameter	/share/program/vrc/odom/src/drivetrain.rs	/^    pub wheel_diameter: Length,$/;"	m	struct:DrivetrainConstants
-wheel_distance	/share/program/vrc/odom/src/drivetrain.rs	/^    pub wheel_distance: Length$/;"	m	struct:DrivetrainConstants
+velocity	/share/program/vrc/odom/src/odometry.rs	/^    pub velocity: LinearVelocity,$/;"	m	struct:Localization
+wheel_diameter	/share/program/vrc/odom/src/main.rs	/^    wheel_diameter: Length,$/;"	m	struct:DrivetrainConstants
+wheel_distance	/share/program/vrc/odom/src/main.rs	/^    wheel_distance: Length$/;"	m	struct:DrivetrainConstants
 x	/share/program/vrc/odom/src/units.rs	/^    pub x: Length,$/;"	m	struct:Translation
 y	/share/program/vrc/odom/src/units.rs	/^    pub y: Length$/;"	m	struct:Translation
 zero	/share/program/vrc/odom/src/units.rs	/^    pub fn zero() -> Self {$/;"	P	implementation:Pose

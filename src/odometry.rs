@@ -1,62 +1,146 @@
-use crate::drivetrain::DrivetrainConstants;
 use crate::units::{Translation, Pose};
-use core::f64::consts::PI;
-use shrewnit::{Angle, Length, Radians, Rotations};
+use crate::DrivetrainConstants;
 
-/// A trait to implement Odometry for Drivetrains.
-pub trait Odometry<const N: usize> {
-    /// Updates the state of the odometry with new information. Measurements is an N-sized array
-    /// (corresponding to number of drivetrain motors) of angles, corresponding with how much they
-    /// have rotated.
-    fn tick(&mut self, measurements: [Angle; N]);
+use core::f64::consts::{PI, TAU};
+use std::cell::RefCell;
+use std::rc::Rc;
+use std::time::Instant;
+use evian::prelude::{TracksHeading, TracksPosition, TracksVelocity};
+use shrewnit::*;
+use vexide::prelude::Motor;
+use vexide::smart::SmartDevice;
+use vexide::smart::imu::InertialSensor;
+use vexide::task::{Task, spawn};
+use vexide::time::sleep;
 
-    fn get_pose(&self) -> Pose;
+type SharedMotor = Rc<RefCell<Motor>>;
+
+pub struct Localization {
+    pub pose: Pose,
+    pub velocity: LinearVelocity,
+    pub angular_velocity: AngularVelocity,
+}
+
+impl Localization {
+    fn new() -> Self {
+        Localization {
+            pose: Pose::zero(),
+            velocity: LinearVelocity::from_canonical(0f64),
+            angular_velocity: AngularVelocity::from_canonical(0f64)
+        }
+    }
 }
 
 pub struct DifferentialDriveOdometry {
-    constants: DrivetrainConstants,
-    pub pose: Pose,
-    prev_left: Angle,
-    prev_right: Angle
+    data: Rc<RefCell<Localization>>,
+    _task: Task<()>,
 }
  
 impl DifferentialDriveOdometry {
-    pub fn new(constants: DrivetrainConstants) -> Self {
-        Self { constants, pose: Pose::zero(), prev_left: Angle::from_canonical(0.0), prev_right: Angle::from_canonical(0.0) }
+    pub fn new(constants: DrivetrainConstants, imu: Option<InertialSensor>, left_motor: SharedMotor, right_motor: SharedMotor) -> Self {
+        let data = Rc::new(RefCell::new(Localization::new()));
+
+        Self {
+            data: data.clone(), _task: spawn(Self::task(data, constants, imu, left_motor, right_motor))
+        }
+    }
+
+    // I LOVE ASYNC (i dont I HATE ASYNC AAAAAAAAAAAAAAAAAAAAAAAA)
+    async fn task(
+        data: Rc<RefCell<Localization>>,
+        constants: DrivetrainConstants,
+        imu: Option<InertialSensor>,
+        left_motor: SharedMotor,
+        right_motor: SharedMotor
+    ) {
+        let mut prev_time = Instant::now();
+        
+        let mut prev_left = Angle::from_canonical(0f64);
+        let mut prev_right = Angle::from_canonical(0f64);
+
+        loop {
+            sleep(Motor::UPDATE_INTERVAL).await;
+            let dt = prev_time.elapsed();
+
+            let left = if let Ok(position) = left_motor.borrow().position() {
+                position.as_radians() * Radians
+            } else {
+                continue;
+            }; 
+            let right = if let Ok(position) = right_motor.borrow().position() {
+                position.as_radians() * Radians
+            } else {
+                continue;
+            }; 
+
+            let dleft = left - prev_left;
+            let dright = right - prev_right;
+
+            // more like delta theta
+            let omega = if let Some(gyro) = imu.as_ref() {
+                if let Ok(heading) = gyro.heading() {
+                    heading.as_radians() * Radians - data.borrow().pose.angle
+                }
+                else {
+                    (dleft - dright) * PI * constants.wheel_diameter.canonical() / constants.wheel_distance.canonical()
+                }
+            } else {
+                (dleft - dright) * PI * constants.wheel_diameter.canonical() / constants.wheel_distance.canonical()
+            };
+
+            let translation = if (dleft - dright).to::<Radians>() < 1e-5 {
+                Translation::new(constants.wheel_diameter * dleft.to::<Rotations>() * PI, constants.wheel_diameter * dright.to::<Rotations>() * PI)
+            } else {
+                let displacement: Length = constants.wheel_diameter / 2.0 * (dleft + dright).to::<Rotations>() * PI;
+                let (sin_theta, cos_theta) = (omega / 2.0 + data.borrow().pose.angle).to::<Radians>().sin_cos();
+     
+                Translation::new(
+                    displacement * cos_theta,
+                    displacement * sin_theta
+                )
+            };
+
+            let norm = translation.norm();
+
+            prev_left = left;
+            prev_right = right;
+
+            prev_time = Instant::now();
+
+            // no, this is not a typo, it's sign(cos(theta))
+            // always positive when cos(theta) is positive, always negative when cos(theta) is negative
+            // graph mod(x - pi / 2, tau) - pi in desmos next to cos(theta) if u arent convinced
+            let sign_costheta = (data.borrow().pose.angle.to::<Radians>() - PI / 2.0) % TAU - PI;
+
+            let new = Localization {
+                pose: data.borrow().pose.clone() + Pose::new(translation, omega),
+                velocity: norm.to::<Meters>().copysign(sign_costheta) / dt.as_secs_f64() * MetersPerSecond,
+                angular_velocity: omega / (dt.as_secs_f64() * Seconds)
+            };
+
+            *data.borrow_mut() = new;
+        }
     }
 }
 
-impl Odometry<2> for DifferentialDriveOdometry {
-    // based on https://medium.com/@nahmed3536/wheel-odometry-model-for-differential-drive-robotics-91b85a012299
-    fn tick(&mut self, measurements: [Angle; 2]) {
-        let left = measurements[0];
-        let right = measurements[1];
+impl TracksHeading for DifferentialDriveOdometry {
+    fn heading(&self) -> evian::prelude::Angle {
+        evian::prelude::Angle::from_radians(self.data.borrow().pose.angle.to::<Radians>())
+    }
+}
 
-        let dleft = left - self.prev_left;
-        let dright = right - self.prev_right;
+impl TracksPosition for DifferentialDriveOdometry {
+    fn position(&self) -> evian::prelude::Vec2<f64> {
+        self.data.borrow().pose.clone().into()
+    }
+}
 
-        // more like delta theta
-        // canonical conversion here, but a * unit / (b * unit) = a/b
-        let omega = (dleft - dright) * PI * self.constants.wheel_diameter.canonical() / self.constants.wheel_distance.canonical();
-
-        let translation = if (dleft - dright).to::<Radians>() < 1e-5 {
-            Translation::new(self.constants.wheel_diameter * dleft.to::<Rotations>() * PI, self.constants.wheel_diameter * dright.to::<Rotations>() * PI)
-        } else {
-            let displacement: Length = self.constants.wheel_diameter / 2.0 * (dleft + dright).to::<Rotations>() * PI;
-            let (sin_theta, cos_theta) = (omega / 2.0 + self.pose.angle).to::<Radians>().sin_cos();
- 
-            Translation::new(
-                displacement * cos_theta,
-                displacement * sin_theta
-            )
-        };
- 
-        self.pose += Pose::new(translation, omega);
-        self.prev_left = left;
-        self.prev_right = right;
+impl TracksVelocity for DifferentialDriveOdometry {
+    fn linear_velocity(&self) -> f64 {
+        self.data.borrow().velocity.clone().to::<MetersPerSecond>()
     }
 
-    fn get_pose(&self) -> Pose {
-        self.pose.clone()
+    fn angular_velocity(&self) -> f64 {
+        self.data.borrow().angular_velocity.clone().to::<RadiansPerSecond>()
     }
 }
