@@ -1,19 +1,26 @@
 use crate::units::{Translation, Pose};
-use crate::DrivetrainConstants;
 
 use core::f64::consts::{PI, TAU};
 use std::cell::RefCell;
 use std::rc::Rc;
 use std::time::Instant;
-use evian::prelude::{TracksHeading, TracksPosition, TracksVelocity};
-use shrewnit::*;
+
+use evian::prelude::{TracksHeading, TracksPosition, TracksVelocity,};
+
+use evian::tracking::Tracking;
 use vexide::prelude::Motor;
-use vexide::smart::SmartDevice;
 use vexide::smart::imu::InertialSensor;
 use vexide::task::{Task, spawn};
 use vexide::time::sleep;
 
-type SharedMotor = Rc<RefCell<Motor>>;
+use shrewnit::*;
+
+type SharedMotors<const N: usize> = Rc<RefCell<[Motor; N]>>;
+
+pub struct DrivetrainConstants {
+    pub wheel_diameter: Length,
+    pub wheel_distance: Length
+}
 
 pub struct Localization {
     pub pose: Pose,
@@ -37,21 +44,24 @@ pub struct DifferentialDriveOdometry {
 }
  
 impl DifferentialDriveOdometry {
-    pub fn new(constants: DrivetrainConstants, imu: Option<InertialSensor>, left_motor: SharedMotor, right_motor: SharedMotor) -> Self {
+    pub fn new<const N: usize>(
+        constants: DrivetrainConstants,
+        imu: Option<InertialSensor>,
+        left_motors: SharedMotors<N>, right_motors: SharedMotors<N>) -> Self {
         let data = Rc::new(RefCell::new(Localization::new()));
 
         Self {
-            data: data.clone(), _task: spawn(Self::task(data, constants, imu, left_motor, right_motor))
+            data: data.clone(), _task: spawn(Self::task(data, constants, imu, left_motors, right_motors))
         }
     }
 
     // I LOVE ASYNC (i dont I HATE ASYNC AAAAAAAAAAAAAAAAAAAAAAAA)
-    async fn task(
+    async fn task<const N: usize>(
         data: Rc<RefCell<Localization>>,
         constants: DrivetrainConstants,
         imu: Option<InertialSensor>,
-        left_motor: SharedMotor,
-        right_motor: SharedMotor
+        left_motors: SharedMotors<N>,
+        right_motors: SharedMotors<N>
     ) {
         let mut prev_time = Instant::now();
         
@@ -59,15 +69,15 @@ impl DifferentialDriveOdometry {
         let mut prev_right = Angle::from_canonical(0f64);
 
         loop {
-            sleep(Motor::UPDATE_INTERVAL).await;
+            sleep(Motor::WRITE_INTERVAL).await;
             let dt = prev_time.elapsed();
 
-            let left = if let Ok(position) = left_motor.borrow().position() {
+            let left = if let Ok(position) = left_motors.borrow()[0].position() {
                 position.as_radians() * Radians
             } else {
                 continue;
             }; 
-            let right = if let Ok(position) = right_motor.borrow().position() {
+            let right = if let Ok(position) = right_motors.borrow()[0].position() {
                 position.as_radians() * Radians
             } else {
                 continue;
@@ -123,14 +133,16 @@ impl DifferentialDriveOdometry {
     }
 }
 
+impl Tracking for DifferentialDriveOdometry {}
+
 impl TracksHeading for DifferentialDriveOdometry {
-    fn heading(&self) -> evian::prelude::Angle {
-        evian::prelude::Angle::from_radians(self.data.borrow().pose.angle.to::<Radians>())
+    fn heading(&self) -> evian::math::Angle {
+        evian::math::Angle::from_radians(self.data.borrow().pose.angle.to::<Radians>())
     }
 }
 
 impl TracksPosition for DifferentialDriveOdometry {
-    fn position(&self) -> evian::prelude::Vec2<f64> {
+    fn position(&self) -> evian::math::Vec2<f64> {
         self.data.borrow().pose.clone().into()
     }
 }

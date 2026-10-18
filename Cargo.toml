@@ -1,5 +1,5 @@
 [package]
-name = "odom"
+name = "test"
 version = "0.1.0"
 edition = "2024"
 
@@ -15,7 +15,7 @@ icon = "cool-x"
 compress = true
 
 [dependencies]
-evian = "0.3.0-rc.1"
+evian = { git = "https://github.com/vexide/evian.git" }
 shrewnit = "0.2.1"
 vexide = { version = "0.8.0", features = ["full", "default-sdk"] }
 
