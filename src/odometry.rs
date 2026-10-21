@@ -123,7 +123,7 @@ impl DifferentialDriveOdometry {
             let sign_costheta = (data.borrow().pose.angle.to::<Radians>() - PI / 2.0) % TAU - PI;
 
             let new = Localization {
-                pose: data.borrow().pose.clone() + Pose::new(translation, omega),
+                pose: &data.borrow().pose + &Pose::new(translation, omega),
                 velocity: norm.to::<Meters>().copysign(sign_costheta) / dt.as_secs_f64() * MetersPerSecond,
                 angular_velocity: omega / (dt.as_secs_f64() * Seconds)
             };
@@ -143,16 +143,16 @@ impl TracksHeading for DifferentialDriveOdometry {
 
 impl TracksPosition for DifferentialDriveOdometry {
     fn position(&self) -> evian::math::Vec2<f64> {
-        self.data.borrow().pose.clone().into()
+        (&self.data.borrow().pose).into()
     }
 }
 
 impl TracksVelocity for DifferentialDriveOdometry {
     fn linear_velocity(&self) -> f64 {
-        self.data.borrow().velocity.clone().to::<MetersPerSecond>()
+        (&self.data.borrow().velocity).to::<MetersPerSecond>()
     }
 
     fn angular_velocity(&self) -> f64 {
-        self.data.borrow().angular_velocity.clone().to::<RadiansPerSecond>()
+        (&self.data.borrow().angular_velocity).to::<RadiansPerSecond>()
     }
 }

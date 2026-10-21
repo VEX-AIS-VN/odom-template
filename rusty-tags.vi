@@ -1,5 +1,9 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+ANGULAR_PID	/share/program/vrc/stuff/src/main.rs	/^    const ANGULAR_PID: AngularPid = AngularPid::new(16.0, 0.0, 1.0, None);$/;"	C	implementation:Robot
+ANGULAR_TOLERANCES	/share/program/vrc/stuff/src/main.rs	/^    const ANGULAR_TOLERANCES: Tolerances = Tolerances::new()$/;"	C	implementation:Robot
+Arm	/share/program/vrc/stuff/src/claw.rs	/^impl Arm {$/;"	c
+Arm	/share/program/vrc/stuff/src/claw.rs	/^pub struct Arm {$/;"	s
 CanonicalUnit	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    type CanonicalUnit: UnitOf<S, Self>;$/;"	t	interface:Dimension
 Celsius	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/dimensions.rs	/^impl<S: Scalar> UnitOf<S, Temperature<S>> for Celsius {$/;"	c
 DifferentialDriveOdometry	/share/program/vrc/stuff/src/odometry.rs	/^impl DifferentialDriveOdometry {$/;"	c
@@ -11,6 +15,8 @@ DifferentialDriveOdometry	/share/program/vrc/stuff/src/odometry.rs	/^pub struct 
 Dimension	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^pub trait Dimension<S: Scalar = f64> {$/;"	i
 DrivetrainConstants	/share/program/vrc/stuff/src/odometry.rs	/^pub struct DrivetrainConstants {$/;"	s
 Fahrenheit	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/dimensions.rs	/^impl<S: Scalar> UnitOf<S, Temperature<S>> for Fahrenheit {$/;"	c
+LINEAR_PID	/share/program/vrc/stuff/src/main.rs	/^    const LINEAR_PID: Pid = Pid::new(1.0, 0.0, 0.125, None);$/;"	C	implementation:Robot
+LINEAR_TOLERANCES	/share/program/vrc/stuff/src/main.rs	/^    const LINEAR_TOLERANCES: Tolerances = Tolerances::new()$/;"	C	implementation:Robot
 Localization	/share/program/vrc/stuff/src/odometry.rs	/^impl Localization {$/;"	c
 Localization	/share/program/vrc/stuff/src/odometry.rs	/^pub struct Localization {$/;"	s
 N	/share/program/vrc/stuff/src/odometry.rs	/^type SharedMotors<const N: usize> = Rc<RefCell<[Motor; N]>>;$/;"	C
@@ -22,6 +28,7 @@ Output	/share/program/vrc/stuff/src/units.rs	/^    type Output = Translation;$/;
 Pose	/share/program/vrc/stuff/src/units.rs	/^impl Add<&Pose> for &Pose {$/;"	c
 Pose	/share/program/vrc/stuff/src/units.rs	/^impl Add<Translation> for Pose {$/;"	c
 Pose	/share/program/vrc/stuff/src/units.rs	/^impl From<Translation> for Pose {$/;"	c
+Pose	/share/program/vrc/stuff/src/units.rs	/^impl Into<evian::math::Vec2<f64>> for &Pose {$/;"	c
 Pose	/share/program/vrc/stuff/src/units.rs	/^impl Into<evian::math::Vec2<f64>> for Pose {$/;"	c
 Pose	/share/program/vrc/stuff/src/units.rs	/^impl Neg for &Pose {$/;"	c
 Pose	/share/program/vrc/stuff/src/units.rs	/^impl Neg for Pose {$/;"	c
@@ -29,6 +36,7 @@ Pose	/share/program/vrc/stuff/src/units.rs	/^impl Pose {$/;"	c
 Pose	/share/program/vrc/stuff/src/units.rs	/^impl Sub<&Pose> for &Pose {$/;"	c
 Pose	/share/program/vrc/stuff/src/units.rs	/^pub struct Pose {$/;"	s
 Robot	/share/program/vrc/stuff/src/main.rs	/^impl Compete for Robot {$/;"	c
+Robot	/share/program/vrc/stuff/src/main.rs	/^impl Robot {$/;"	c
 Robot	/share/program/vrc/stuff/src/main.rs	/^struct Robot {$/;"	s
 Scalar	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^pub trait Scalar:$/;"	i
 SharedMotors	/share/program/vrc/stuff/src/odometry.rs	/^type SharedMotors<const N: usize> = Rc<RefCell<[Motor; N]>>;$/;"	t
@@ -50,6 +58,7 @@ __dim_const_op_imp	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f
 __measure_conversions	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! __measure_conversions {$/;"	M
 __unit_mult_imp	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! __unit_mult_imp {$/;"	M
 __unit_one_imp	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! __unit_one_imp {$/;"	M
+_task	/share/program/vrc/stuff/src/claw.rs	/^    _task: Task<()>$/;"	m	struct:Arm
 _task	/share/program/vrc/stuff/src/odometry.rs	/^    _task: Task<()>,$/;"	m	struct:DifferentialDriveOdometry
 add	/share/program/vrc/stuff/src/units.rs	/^    fn add(self, rhs: &Pose) -> Self::Output {$/;"	P	implementation:Pose
 add	/share/program/vrc/stuff/src/units.rs	/^    fn add(self, rhs: &Translation) -> Self::Output {$/;"	P	implementation:Translation
@@ -57,8 +66,10 @@ add	/share/program/vrc/stuff/src/units.rs	/^    fn add(self, rhs: Translation) -
 angle	/share/program/vrc/stuff/src/units.rs	/^    pub angle: Angle$/;"	m	struct:Pose
 angular_velocity	/share/program/vrc/stuff/src/odometry.rs	/^    fn angular_velocity(&self) -> f64 {$/;"	P	implementation:DifferentialDriveOdometry
 angular_velocity	/share/program/vrc/stuff/src/odometry.rs	/^    pub angular_velocity: AngularVelocity,$/;"	m	struct:Localization
+arm	/share/program/vrc/stuff/src/main.rs	/^    arm: Arm,$/;"	m	struct:Robot
 autonomous	/share/program/vrc/stuff/src/main.rs	/^    async fn autonomous(&mut self) {$/;"	P	implementation:Robot
 canonical	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    fn canonical(&self) -> S;$/;"	P	interface:Dimension
+claw	/share/program/vrc/stuff/src/main.rs	/^mod claw;$/;"	n
 controller	/share/program/vrc/stuff/src/main.rs	/^    controller: Controller$/;"	m	struct:Robot
 data	/share/program/vrc/stuff/src/odometry.rs	/^    data: Rc<RefCell<Localization>>,$/;"	m	struct:DifferentialDriveOdometry
 dimension	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! dimension {$/;"	M
@@ -87,6 +98,7 @@ mul	/share/program/vrc/stuff/src/units.rs	/^    fn mul(self, rhs: f64) -> Self::
 ne	/share/program/vrc/stuff/src/units.rs	/^    fn ne(&self, other: &Translation) -> bool {$/;"	P	implementation:Translation
 neg	/share/program/vrc/stuff/src/units.rs	/^    fn neg(self) -> Self::Output {$/;"	P	implementation:Pose
 neg	/share/program/vrc/stuff/src/units.rs	/^    fn neg(self) -> Self::Output {$/;"	P	implementation:Translation
+new	/share/program/vrc/stuff/src/claw.rs	/^    pub fn new(motor: Motor, pid: AngularPid) -> Self {$/;"	P	implementation:Arm
 new	/share/program/vrc/stuff/src/odometry.rs	/^    fn new() -> Self {$/;"	P	implementation:Localization
 new	/share/program/vrc/stuff/src/odometry.rs	/^    pub fn new<const N: usize>($/;"	P	implementation:DifferentialDriveOdometry
 new	/share/program/vrc/stuff/src/units.rs	/^    pub fn new(translation: Translation, angle: Angle) -> Self {$/;"	P	implementation:Pose
@@ -105,9 +117,12 @@ rotate	/share/program/vrc/stuff/src/units.rs	/^    pub fn rotate(&self, angle: A
 rotate	/share/program/vrc/stuff/src/units.rs	/^    pub fn rotate(&self, angle: Angle) -> Translation {$/;"	P	implementation:Translation
 runtime	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/vexide-0.8.0/src/lib.rs	/^pub mod runtime {$/;"	n
 scalar_extension_trait	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! scalar_extension_trait {$/;"	M
+set_target	/share/program/vrc/stuff/src/claw.rs	/^    fn set_target(&mut self, angle: shrewnit::Angle) {$/;"	P	implementation:Arm
+setpoint	/share/program/vrc/stuff/src/claw.rs	/^    setpoint: Rc<RefCell<Option<Angle>>>,$/;"	m	struct:Arm
 simple_unit	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! simple_unit {$/;"	M
 sub	/share/program/vrc/stuff/src/units.rs	/^    fn sub(self, rhs: &Pose) -> Self::Output {$/;"	P	implementation:Pose
 sub	/share/program/vrc/stuff/src/units.rs	/^    fn sub(self, rhs: &Translation) -> Self::Output {$/;"	P	implementation:Translation
+task	/share/program/vrc/stuff/src/claw.rs	/^    async fn task(mut motor: Motor, setpoint: Rc<RefCell<Option<Angle>>>, mut pid: AngularPid) {$/;"	P	implementation:Arm
 task	/share/program/vrc/stuff/src/odometry.rs	/^    async fn task<const N: usize>($/;"	P	implementation:DifferentialDriveOdometry
 time	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/vexide-0.8.0/src/lib.rs	/^pub mod time {$/;"	n
 to	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    fn to<U: UnitOf<S, Self>>(&self) -> S$/;"	P	interface:Dimension
