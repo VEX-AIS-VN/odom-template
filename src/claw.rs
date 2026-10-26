@@ -5,20 +5,25 @@ use evian::{control::loops::{AngularPid, Feedback}, math::Angle};
 
 pub struct Arm {
     setpoint: Rc<RefCell<Option<Angle>>>,
+    roller_motor: Motor,
     _task: Task<()>
 }
 
 impl Arm {
-    pub fn new(motor: Motor, pid: AngularPid) -> Self {
+    pub fn new(motor: Motor, roller_motor: Motor, pid: AngularPid) -> Self {
         let setpoint = Rc::new(RefCell::new(None));
 
         Arm {
-            setpoint: setpoint.clone(), _task: spawn(Self::task(motor, setpoint, pid))
+            setpoint: setpoint.clone(), roller_motor, _task: spawn(Self::task(motor, setpoint, pid))
         }
     }
 
-    fn set_target(&mut self, angle: shrewnit::Angle) {
+    pub fn set_target(&mut self, angle: shrewnit::Angle) {
         *self.setpoint.borrow_mut() = Some(Angle::from_radians(angle.to::<shrewnit::Radians>()));
+    }
+
+    pub fn intake(&mut self) {
+        self.roller_motor.set_voltage(8.0);
     }
 
     async fn task(mut motor: Motor, setpoint: Rc<RefCell<Option<Angle>>>, mut pid: AngularPid) {
@@ -38,7 +43,7 @@ impl Arm {
             prev_time = Instant::now();
 
             let signal = pid.update(position, setpoint.borrow().clone().unwrap(), current_time);  // radians/sec
-            let _ = motor.set_velocity((signal / TAU * 60.0) as i32);  // conversion to rotations/min
+            let _ = motor.set_velocity((signal / TAU * 60.0) as i32);  // conversion to rpm
         }
     }
 }

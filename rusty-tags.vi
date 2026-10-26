@@ -68,6 +68,9 @@ angular_velocity	/share/program/vrc/stuff/src/odometry.rs	/^    fn angular_veloc
 angular_velocity	/share/program/vrc/stuff/src/odometry.rs	/^    pub angular_velocity: AngularVelocity,$/;"	m	struct:Localization
 arm	/share/program/vrc/stuff/src/main.rs	/^    arm: Arm,$/;"	m	struct:Robot
 autonomous	/share/program/vrc/stuff/src/main.rs	/^    async fn autonomous(&mut self) {$/;"	P	implementation:Robot
+average_motor_position	/share/program/vrc/stuff/src/odometry.rs	/^fn average_motor_position<const N: usize>($/;"	f
+calculate_omega	/share/program/vrc/stuff/src/odometry.rs	/^    fn calculate_omega($/;"	P	implementation:DifferentialDriveOdometry
+calculate_translation	/share/program/vrc/stuff/src/odometry.rs	/^    fn calculate_translation($/;"	P	implementation:DifferentialDriveOdometry
 canonical	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    fn canonical(&self) -> S;$/;"	P	interface:Dimension
 claw	/share/program/vrc/stuff/src/main.rs	/^mod claw;$/;"	n
 controller	/share/program/vrc/stuff/src/main.rs	/^    controller: Controller$/;"	m	struct:Robot
@@ -90,6 +93,7 @@ heading	/share/program/vrc/stuff/src/units.rs	/^    pub fn heading(&self) -> Ang
 heading	/share/program/vrc/stuff/src/units.rs	/^    pub fn heading(&self) -> Angle {$/;"	P	implementation:Translation
 impl_assign	/share/program/vrc/stuff/src/units.rs	/^macro_rules! impl_assign {$/;"	M
 impl_owned	/share/program/vrc/stuff/src/units.rs	/^macro_rules! impl_owned {$/;"	M
+intake	/share/program/vrc/stuff/src/claw.rs	/^    pub fn intake(&mut self) {$/;"	P	implementation:Arm
 into	/share/program/vrc/stuff/src/units.rs	/^    fn into(self) -> evian::math::Vec2<f64> {$/;"	P	implementation:Pose
 into	/share/program/vrc/stuff/src/units.rs	/^    fn into(self) -> evian::math::Vec2<f64> {$/;"	P	implementation:Translation
 linear_velocity	/share/program/vrc/stuff/src/odometry.rs	/^    fn linear_velocity(&self) -> f64 {$/;"	P	implementation:DifferentialDriveOdometry
@@ -98,7 +102,7 @@ mul	/share/program/vrc/stuff/src/units.rs	/^    fn mul(self, rhs: f64) -> Self::
 ne	/share/program/vrc/stuff/src/units.rs	/^    fn ne(&self, other: &Translation) -> bool {$/;"	P	implementation:Translation
 neg	/share/program/vrc/stuff/src/units.rs	/^    fn neg(self) -> Self::Output {$/;"	P	implementation:Pose
 neg	/share/program/vrc/stuff/src/units.rs	/^    fn neg(self) -> Self::Output {$/;"	P	implementation:Translation
-new	/share/program/vrc/stuff/src/claw.rs	/^    pub fn new(motor: Motor, pid: AngularPid) -> Self {$/;"	P	implementation:Arm
+new	/share/program/vrc/stuff/src/claw.rs	/^    pub fn new(motor: Motor, roller_motor: Motor, pid: AngularPid) -> Self {$/;"	P	implementation:Arm
 new	/share/program/vrc/stuff/src/odometry.rs	/^    fn new() -> Self {$/;"	P	implementation:Localization
 new	/share/program/vrc/stuff/src/odometry.rs	/^    pub fn new<const N: usize>($/;"	P	implementation:DifferentialDriveOdometry
 new	/share/program/vrc/stuff/src/units.rs	/^    pub fn new(translation: Translation, angle: Angle) -> Self {$/;"	P	implementation:Pose
@@ -113,11 +117,12 @@ position	/share/program/vrc/stuff/src/odometry.rs	/^    fn position(&self) -> ev
 prelude	/home/me/.cargo/git/checkouts/evian-65a579cfdb8e5c9a/bc300be/packages/evian/src/lib.rs	/^pub mod prelude {$/;"	n
 prelude	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^pub mod prelude {$/;"	n
 prelude	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/vexide-0.8.0/src/lib.rs	/^pub mod prelude {$/;"	n
+roller_motor	/share/program/vrc/stuff/src/claw.rs	/^    roller_motor: Motor,$/;"	m	struct:Arm
 rotate	/share/program/vrc/stuff/src/units.rs	/^    pub fn rotate(&self, angle: Angle) -> Pose {$/;"	P	implementation:Pose
 rotate	/share/program/vrc/stuff/src/units.rs	/^    pub fn rotate(&self, angle: Angle) -> Translation {$/;"	P	implementation:Translation
 runtime	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/vexide-0.8.0/src/lib.rs	/^pub mod runtime {$/;"	n
 scalar_extension_trait	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! scalar_extension_trait {$/;"	M
-set_target	/share/program/vrc/stuff/src/claw.rs	/^    fn set_target(&mut self, angle: shrewnit::Angle) {$/;"	P	implementation:Arm
+set_target	/share/program/vrc/stuff/src/claw.rs	/^    pub fn set_target(&mut self, angle: shrewnit::Angle) {$/;"	P	implementation:Arm
 setpoint	/share/program/vrc/stuff/src/claw.rs	/^    setpoint: Rc<RefCell<Option<Angle>>>,$/;"	m	struct:Arm
 simple_unit	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! simple_unit {$/;"	M
 sub	/share/program/vrc/stuff/src/units.rs	/^    fn sub(self, rhs: &Pose) -> Self::Output {$/;"	P	implementation:Pose
@@ -134,7 +139,7 @@ unit_type	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit
 units	/share/program/vrc/stuff/src/main.rs	/^mod units;$/;"	n
 velocity	/share/program/vrc/stuff/src/odometry.rs	/^    pub velocity: LinearVelocity,$/;"	m	struct:Localization
 wheel_diameter	/share/program/vrc/stuff/src/odometry.rs	/^    pub wheel_diameter: Length,$/;"	m	struct:DrivetrainConstants
-wheel_distance	/share/program/vrc/stuff/src/odometry.rs	/^    pub wheel_distance: Length$/;"	m	struct:DrivetrainConstants
+wheel_from_center	/share/program/vrc/stuff/src/odometry.rs	/^    pub wheel_from_center: Length$/;"	m	struct:DrivetrainConstants
 x	/share/program/vrc/stuff/src/units.rs	/^    pub x: Length,$/;"	m	struct:Translation
 y	/share/program/vrc/stuff/src/units.rs	/^    pub y: Length$/;"	m	struct:Translation
 zero	/share/program/vrc/stuff/src/units.rs	/^    pub fn zero() -> Self {$/;"	P	implementation:Pose
