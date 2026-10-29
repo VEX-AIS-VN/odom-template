@@ -9,6 +9,7 @@ use evian::prelude::{TracksHeading, TracksPosition, TracksVelocity};
 
 use evian::tracking::Tracking;
 use vexide::prelude::Motor;
+use vexide::smart::SmartDevice;
 use vexide::smart::imu::InertialSensor;
 use vexide::task::{Task, spawn};
 use vexide::time::sleep;
@@ -32,8 +33,8 @@ impl Localization {
     fn new() -> Self {
         Localization {
             pose: Pose::zero(),
-            velocity: LinearVelocity::from_canonical(0f64),
-            angular_velocity: AngularVelocity::from_canonical(0f64)
+            velocity: LinearVelocity::from_canonical(0.0),
+            angular_velocity: AngularVelocity::from_canonical(0.0)
         }
     }
 }
@@ -43,19 +44,19 @@ fn average_motor_position<const N: usize>(
 ) -> Angle {
     let motors = motors.borrow();
 
-    if motors.is_empty() {
-        return Angle::from_canonical(0.0);
-    }
-
     let mut sum = Angle::from_canonical(0.0);
 
-    let mut count = 0;
+    let mut count = 1;
 
     for motor in motors.iter() {
         if let Ok(position) = motor.position() {
             sum += position.as_radians() * Radians;
             count += 1
         }
+    }
+
+    if count > 1 {
+        count -= 1;
     }
 
     sum / count as f64
@@ -145,10 +146,10 @@ impl DifferentialDriveOdometry {
     ) {
         let mut prev_time = Instant::now();
         
-        let mut prev_left = Angle::from_canonical(0f64);
-        let mut prev_right = Angle::from_canonical(0f64);
+        let mut prev_left = Angle::from_canonical(0.0);
+        let mut prev_right = Angle::from_canonical(0.0);
 
-        let mut prev_imu = Angle::from_canonical(0f64);
+        let mut prev_imu = Angle::from_canonical(0.0);
 
         for motor in left_motors.borrow_mut().iter_mut() {
             motor.reset_position().unwrap();
@@ -163,7 +164,7 @@ impl DifferentialDriveOdometry {
         }
 
         loop {
-            sleep(Motor::WRITE_INTERVAL).await;
+            sleep(Motor::UPDATE_INTERVAL).await;
             let dt = prev_time.elapsed().as_secs_f64() * Seconds;
 
             let left = average_motor_position(&left_motors);
@@ -180,6 +181,7 @@ impl DifferentialDriveOdometry {
             }
 
             let (translation, velocity) = Self::calculate_translation(&constants, dleft, dright, omega, data.borrow().pose.angle, dt.to::<Seconds>());
+            println!("{} {}", translation.x.to::<Centimeters>(), translation.y.to::<Centimeters>());
 
             prev_left = left;
             prev_right = right;

@@ -66,7 +66,6 @@ add	/share/program/vrc/stuff/src/units.rs	/^    fn add(self, rhs: Translation) -
 angle	/share/program/vrc/stuff/src/units.rs	/^    pub angle: Angle$/;"	m	struct:Pose
 angular_velocity	/share/program/vrc/stuff/src/odometry.rs	/^    fn angular_velocity(&self) -> f64 {$/;"	P	implementation:DifferentialDriveOdometry
 angular_velocity	/share/program/vrc/stuff/src/odometry.rs	/^    pub angular_velocity: AngularVelocity,$/;"	m	struct:Localization
-arm	/share/program/vrc/stuff/src/main.rs	/^    arm: Arm,$/;"	m	struct:Robot
 autonomous	/share/program/vrc/stuff/src/main.rs	/^    async fn autonomous(&mut self) {$/;"	P	implementation:Robot
 average_motor_position	/share/program/vrc/stuff/src/odometry.rs	/^fn average_motor_position<const N: usize>($/;"	f
 calculate_omega	/share/program/vrc/stuff/src/odometry.rs	/^    fn calculate_omega($/;"	P	implementation:DifferentialDriveOdometry
@@ -123,12 +122,14 @@ rotate	/share/program/vrc/stuff/src/units.rs	/^    pub fn rotate(&self, angle: A
 runtime	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/vexide-0.8.0/src/lib.rs	/^pub mod runtime {$/;"	n
 scalar_extension_trait	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! scalar_extension_trait {$/;"	M
 set_target	/share/program/vrc/stuff/src/claw.rs	/^    pub fn set_target(&mut self, angle: shrewnit::Angle) {$/;"	P	implementation:Arm
-setpoint	/share/program/vrc/stuff/src/claw.rs	/^    setpoint: Rc<RefCell<Option<Angle>>>,$/;"	m	struct:Arm
+setpoint	/share/program/vrc/stuff/src/claw.rs	/^    setpoint: Rc<Cell<Option<Angle>>>,$/;"	m	struct:Arm
 simple_unit	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^macro_rules! simple_unit {$/;"	M
 sub	/share/program/vrc/stuff/src/units.rs	/^    fn sub(self, rhs: &Pose) -> Self::Output {$/;"	P	implementation:Pose
 sub	/share/program/vrc/stuff/src/units.rs	/^    fn sub(self, rhs: &Translation) -> Self::Output {$/;"	P	implementation:Translation
-task	/share/program/vrc/stuff/src/claw.rs	/^    async fn task(mut motor: Motor, setpoint: Rc<RefCell<Option<Angle>>>, mut pid: AngularPid) {$/;"	P	implementation:Arm
+task	/share/program/vrc/stuff/src/claw.rs	/^    async fn task(mut motor: Motor, setpoint: Rc<Cell<Option<Angle>>>, mut pid: AngularPid) {$/;"	P	implementation:Arm
 task	/share/program/vrc/stuff/src/odometry.rs	/^    async fn task<const N: usize>($/;"	P	implementation:DifferentialDriveOdometry
+test_norms	/share/program/vrc/stuff/src/units.rs	/^    fn test_norms() {$/;"	f	module:tests
+tests	/share/program/vrc/stuff/src/units.rs	/^mod tests {$/;"	n
 time	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/vexide-0.8.0/src/lib.rs	/^pub mod time {$/;"	n
 to	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/lib.rs	/^    fn to<U: UnitOf<S, Self>>(&self) -> S$/;"	P	interface:Dimension
 to_canonical	/home/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shrewnit-0.2.1/src/dimensions.rs	/^    fn to_canonical(converted: S) -> S {$/;"	P	implementation:Celsius

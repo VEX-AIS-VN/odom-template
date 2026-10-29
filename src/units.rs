@@ -16,7 +16,7 @@ impl Translation {
 
     /// Instantiates a Translation vector entirely of 0 values.
     pub fn zero() -> Self {
-        Self { x: Length::from_canonical(0f64), y: Length::from_canonical(0f64) }
+        Self { x: Length::from_canonical(0.0), y: Length::from_canonical(0.0) }
     }
 
     /// Gets the Euclidean norm of the vector, being its magnitude from the (relative) origin.
@@ -128,7 +128,7 @@ impl Pose {
     }
 
     pub fn zero() -> Self {
-        Self { translation: Translation::zero(), angle: Angle::from_canonical(0f64) }
+        Self { translation: Translation::zero(), angle: Angle::from_canonical(0.0) }
     }
 
     pub fn heading(&self) -> Angle {
@@ -259,3 +259,19 @@ impl_assign!(AddAssign, add_assign, Translation, add, x, y);
 impl_assign!(AddAssign, add_assign, Pose, add, translation, angle);
 impl_assign!(SubAssign, sub_assign, Translation, sub, x, y);
 impl_assign!(SubAssign, sub_assign, Pose, sub, translation, angle);
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_norms() {
+        let translation = Translation::new(3.0 * Meters, 4.0 * Meters);
+        let pose = Pose::new(translation.clone(), 32.0 * Degrees);
+
+        assert_eq!(translation.norm(), pose.norm());
+        assert_eq!(translation.norm(), 5.0 * Meters);
+        assert_eq!(translation.norm_squared(), pose.norm_squared());
+        assert_eq!(translation.norm_squared(), 25.0);
+    }
+}

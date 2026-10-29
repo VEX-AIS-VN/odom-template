@@ -18,7 +18,7 @@ use crate::claw::Arm;
 
 struct Robot {
     drivetrain: Drivetrain<Differential, DifferentialDriveOdometry>,
-    arm: Arm,
+    //arm: Arm,
     controller: Controller
 }
 
@@ -37,18 +37,18 @@ impl Robot {
 
 impl Compete for Robot {
     async fn autonomous(&mut self) {
-        
+        println!("in auton");
     }
 
     async fn driver(&mut self) {
+        println!("hi");
         loop {
             let state = self.controller.state().unwrap_or_default();
 
             _ = self
                 .drivetrain
                 .model
-                .drive_arcade(state.left_stick.y(), state.left_stick.x());
-            println!("{}", self.drivetrain.tracking.position());
+                .drive_arcade(state.left_stick.x(), state.left_stick.y());
 
             sleep(Motor::WRITE_INTERVAL).await;
         }
@@ -58,16 +58,16 @@ impl Compete for Robot {
 #[vexide::main]
 async fn main(peripherals: Peripherals) {
     let left_motors = shared_motors![
-        Motor::new(peripherals.port_7, Gearset::Green, Direction::Forward)
+        Motor::new(peripherals.port_1, Gearset::Green, Direction::Forward)
     ];
 
     let right_motors = shared_motors![
-        Motor::new(peripherals.port_17, Gearset::Green, Direction::Forward)
+        Motor::new(peripherals.port_10, Gearset::Green, Direction::Forward)
     ];
 
     let constants = DrivetrainConstants {
         wheel_diameter: 5.0 * Centimeters,
-        wheel_distance: 30.0 * Centimeters
+        wheel_from_center: 15.0 * Centimeters
     };
 
     Robot {
@@ -76,10 +76,11 @@ async fn main(peripherals: Peripherals) {
             DifferentialDriveOdometry::new(constants, None, left_motors, right_motors)
         ),
 
-        arm: Arm::new(
+        /*arm: Arm::new(
             Motor::new(peripherals.port_6, Gearset::Green, Direction::Forward),
+            Motor::new(peripherals.port_13, Gearset::Green, Direction::Forward),
             AngularPid::new(1.0, 2.0, 0.125, None)
-        ),
+        ),*/
 
         controller: peripherals.primary_controller
     }
